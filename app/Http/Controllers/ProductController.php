@@ -73,7 +73,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('products.edit',compact('product'));
     }
 
     /**
@@ -85,7 +85,17 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        // validate the product
+        $request->validate([
+            'name'=>'required',
+            'detail'=>'required'
+        ]);
+
+        // update the product exists in the database
+        $product->update($request->all());
+
+        // redirect
+        return redirect()->route('products.index')->with('success','Product updated successfully');
     }
 
     /**
