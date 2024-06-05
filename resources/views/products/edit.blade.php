@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    @if ($erros -> all())
+    @if ($errors -> all())
         <div class="alert alert-danger">
             <strong>Whoops! </strong>
             There were some probleems with your input.
@@ -24,7 +24,7 @@
         @endforeach
     @endif
 
-    <form action="{{ route('products.update') }}" method="post">
+    <form action="{{ route('products.update',$product->id) }}" method="post">
         @csrf
         @method('PUT')
         <div class="row">
@@ -35,9 +35,7 @@
                 </div>
                 <div class="form-group">
                     <strong>Details:</strong>
-                    <textarea name="detail" class="form-control" style="height: 150px" placeholder="Detail">
-                        {{ $product->detail }}
-                    </textarea>
+                    <textarea name="detail" class="form-control" style="height: 150px" placeholder="Detail">{{ $product->detail }}</textarea>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
