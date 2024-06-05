@@ -14,7 +14,13 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        // creating a variable for holding the  products list
+        // use product model and ask the model to get the latest
+        // ask laravel to pagination
+        $products = Product::latest()->paginate(5);
+
+        // return the view 
+        return view('products.index',compact('products'))->with(request()->input('page'));
     }
 
     /**
@@ -24,7 +30,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -35,7 +41,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the input
+        $request -> validate([
+            'name' => 'required',
+            'detail' => 'required',
+        ]);
+
+        // create a new product in the database
+        Product::create($request->all());
+
+        // redirect the user and send friendly message
+        return redirect()->route('products.index')->with('success','Product created successfully');
     }
 
     /**
